@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,3 +21,12 @@ Route::prefix('students')->group(function () {
 });
 
 
+Route::prefix('teachers')->group(function () {
+    Route::get('/', [TeacherController::class, 'index'])->name('admin.teachers.index');
+    Route::get('/create', [TeacherController::class, 'create'])->name('admin.teachers.create');
+    Route::post('/store', [TeacherController::class, 'store'])->name('admin.teachers.store');
+    Route::get('/{id}/edit', [TeacherController::class, 'edit'])->name('admin.teachers.edit');
+    Route::put('/{id}', [TeacherController::class, 'update'])->name('admin.teachers.update');
+    Route::get('/{id}', [TeacherController::class, 'destroy'])->name('admin.teachers.destroy');
+    Route::get('/{id}/view', [TeacherController::class, 'show'])->name('admin.teachers.view');
+});

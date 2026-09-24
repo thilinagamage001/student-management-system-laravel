@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -52,36 +53,41 @@ class StudentController extends Controller
 
             ]);
 
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'student',
-            ]);
-            
-            $year = date('Y');
-            $nextNumber = Student::count() + 1;
+             DB::transaction(function () use ($request) {
+                    $user = User::create([
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'email' => $request->email,
+                            'password' => Hash::make($request->password),
+                            'role' => 'student',
+                        ]);
+                        
+                        $year = date('Y');
+                        $nextNumber = Student::count() + 1;
 
-            $studentId = 'STU'.$year.'-'.str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
-            
-            $profile_picture = null;
-            if ($request->hasFile('profile_picture')) {
-                    $profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
-               }
+                        $studentId = 'STU'.$year.'-'.str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+                        
+                        $profile_picture = null;
+                        if ($request->hasFile('profile_picture')) {
+                                $profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
+                        }
 
-            $student = Student::create([
-                'user_id' => $user->id,
-                'reg_no' => $studentId,
-                'phone' => $request->phone,
-                'dob' => $request->dob,
-                'age' => $request->age,
-                'address' => $request->address,
-                'gender' => $request->gender,
-                'nic' => $request->nic,
-                'profile_picture' => $profile_picture,
-                'status' => 'active',
-            ]);
+                        $student = Student::create([
+                            'user_id' => $user->id,
+                            'reg_no' => $studentId,
+                            'phone' => $request->phone,
+                            'dob' => $request->dob,
+                            'age' => $request->age,
+                            'address' => $request->address,
+                            'gender' => $request->gender,
+                            'nic' => $request->nic,
+                            'profile_picture' => $profile_picture,
+                            'status' => 'active',
+                        ]);
+
+             });
+
+ 
 
         }
         
@@ -117,38 +123,41 @@ class StudentController extends Controller
     {
         try {
 
-            $student = Student::findOrFail($id);
+                DB::transaction(function () use ($request) {
+                    $student = Student::findOrFail($id);
 
-            $user = User::findOrFail($student->user_id);
+                    $user = User::findOrFail($student->user_id);
 
-            $user->update([
-                'first_name' => $request->first_name,
-                'last_name'  => $request->last_name,
-                'email'      => $request->email,
-                'role'       => 'student',
-            ]);
+                    $user->update([
+                        'first_name' => $request->first_name,
+                        'last_name'  => $request->last_name,
+                        'email'      => $request->email,
+                        'role'       => 'student',
+                    ]);
 
-            if (!empty($request->password)) {
-                $userData['password'] = Hash::make($request->password);
-            }
+                    if (!empty($request->password)) {
+                        $userData['password'] = Hash::make($request->password);
+                    }
 
-            $profile_picture = $student->profile_picture;
+                    $profile_picture = $student->profile_picture;
 
-            if ($request->hasFile('profile_picture')) {
-                $profile_picture = $request->file('profile_picture')
-                    ->store('profile_pictures', 'public');
-            }
+                    if ($request->hasFile('profile_picture')) {
+                        $profile_picture = $request->file('profile_picture')
+                            ->store('profile_pictures', 'public');
+                    }
 
-            $student->update([
-                'phone' => $request->phone,
-                'dob' => $request->dob,
-                'age' => $request->age,
-                'address' => $request->address,
-                'gender' => $request->gender,
-                'nic' => $request->nic,
-                'profile_picture' => $profile_picture,
-                'status' => 'active',
-            ]);
+                    $student->update([
+                        'phone' => $request->phone,
+                        'dob' => $request->dob,
+                        'age' => $request->age,
+                        'address' => $request->address,
+                        'gender' => $request->gender,
+                        'nic' => $request->nic,
+                        'profile_picture' => $profile_picture,
+                        'status' => 'active',
+                    ]);
+                });
+ 
 
         } catch (\Exception $e) {
             dd($e->getMessage());
