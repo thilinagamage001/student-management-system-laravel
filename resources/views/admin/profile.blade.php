@@ -1,0 +1,9 @@
+
+   @include('partials.head')
+   @include('partials.navbar')
+
+
+
+    <h1>Profile..</h1>
+
+    @include('partials.footer')
