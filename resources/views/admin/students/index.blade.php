@@ -90,7 +90,7 @@
                             <td>{{ $student->user->created_at->format('M j, Y') }}</td>
                             <td class="text-end">
                               <div class="btn-group btn-group-sm">
-                                <a href="#"
+                                <a href="{{ route('admin.students.view', $student->id) }}"
                                   type="button"
                                   class="btn btn-outline-secondary" >
                                   <i class="bi bi-eye" aria-hidden="true"> </i>
