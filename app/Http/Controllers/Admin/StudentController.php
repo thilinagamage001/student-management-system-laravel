@@ -73,7 +73,6 @@ class StudentController extends Controller
             $student = Student::create([
                 'user_id' => $user->id,
                 'reg_no' => $studentId,
-                'email' => $request->email,
                 'phone' => $request->phone,
                 'dob' => $request->dob,
                 'age' => $request->age,
@@ -96,9 +95,10 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $student = Student::with('user')->findOrFail($id);
+        return view('admin.students.view', compact('student'));
     }
 
     /**
@@ -113,9 +113,50 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        
+        try {
+
+            $student = Student::findOrFail($id);
+
+            $user = User::findOrFail($student->user_id);
+
+            $user->update([
+                'first_name' => $request->first_name,
+                'last_name'  => $request->last_name,
+                'email'      => $request->email,
+                'role'       => 'student',
+            ]);
+
+            if (!empty($request->password)) {
+                $userData['password'] = Hash::make($request->password);
+            }
+
+            $profile_picture = $student->profile_picture;
+
+            if ($request->hasFile('profile_picture')) {
+                $profile_picture = $request->file('profile_picture')
+                    ->store('profile_pictures', 'public');
+            }
+
+            $student->update([
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'age' => $request->age,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'nic' => $request->nic,
+                'profile_picture' => $profile_picture,
+                'status' => 'active',
+            ]);
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return redirect()
+            ->route('admin.students.index')
+            ->with('success', 'Student updated successfully.');
     }
 
     /**

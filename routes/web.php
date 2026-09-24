@@ -16,6 +16,7 @@ Route::prefix('students')->group(function () {
     Route::get('/{id}/edit', [StudentController::class, 'edit'])->name('admin.students.edit');
     Route::put('/{id}', [StudentController::class, 'update'])->name('admin.students.update');
     Route::get('/{id}', [StudentController::class, 'destroy'])->name('admin.students.destroy');
+    Route::get('/{id}/view', [StudentController::class, 'show'])->name('admin.students.view');
 });
 
 
