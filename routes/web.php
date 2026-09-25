@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\TeacherCourseController;
+use App\Http\Controllers\Admin\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,4 +52,9 @@ Route::prefix('teacher-courses')->group(function () {
     Route::put('/{id}', [TeacherCourseController::class, 'update'])->name('admin.teacher-courses.update');
     Route::get('/{id}', [TeacherCourseController::class, 'destroy'])->name('admin.teacher-courses.destroy');
     Route::get('/{id}/view', [TeacherCourseController::class, 'show'])->name('admin.teacher-courses.view');
+});
+
+Route::prefix('enrollments')->group(function () {
+    // Route::get('/', [TeacherCourseController::class, 'index'])->name('admin.enrollments.index');
+    Route::get('/create', [EnrollmentController::class, 'create'])->name('admin.enrollments.create');
 });
