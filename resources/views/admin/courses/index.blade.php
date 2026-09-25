@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    Teachers List
+    Courses
 @endpush
 
 @section('content')
@@ -14,7 +14,7 @@
                   <div class="card-header">
                     <div class="row g-2 align-items-center">
                       <div class="col-12 col-md-4">
-                        <h3 class="card-title">Teacher Directory</h3>
+                        <h3 class="card-title">Course Directory</h3>
                       </div>
                       <div class="col-12 col-md-8">
                         <div class="d-flex flex-wrap justify-content-md-end gap-2">
@@ -42,9 +42,9 @@
                             <option value="author">Author</option>
                             <option value="subscriber">Subscriber</option>
                           </select>
-                          <a href="{{ route('admin.teachers.create') }}" class="btn btn-sm btn-primary">
+                          <a href="{{ route('admin.courses.create') }}" class="btn btn-sm btn-primary">
                             <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
-                            New teacher
+                            New course
                           </a>
                         </div>
                       </div>
@@ -57,50 +57,41 @@
                       <table class="table table-hover align-middle m-0">
                         <thead>
                           <tr>
+                            <th>Course Code</th>
                             <th>Name</th>
-                            <th>Teacher ID</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Credits</th>
                             <th>Status</th>
                             <th>Created</th>
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $teachers as $teacher )
+                            @foreach ( $courses as $course )
                                                        <tr>
                             <td>
                               <div class="d-flex align-items-center">
-                                <img
-                                  src="{{ asset('storage/' . $teacher->profile_picture) }}"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">{{ $teacher->user->first_name }} {{ $teacher->user->last_name }} </span>
+                                <span class="fw-medium">{{ $course->course_code }} </span>
                               </div>
                             </td>
-                            <td>{{ $teacher->reg_no }}</td>
-                            <td>{{ $teacher->user->email }}</td>
+                            <td>{{ $course->name }}</td>
+                            <td>{{ $course->credits }}</td>
                             <td>
-                              <span class="badge text-bg-danger"> {{ $teacher->user->role }} </span>
+                              <span class="badge text-bg-success">{{ $course->status }}</span>
                             </td>
-                            <td>
-                              <span class="badge text-bg-success">{{ $teacher->status }}</span>
-                            </td>
-                            <td>{{ $teacher->user->created_at->format('M j, Y') }}</td>
+                            <td>{{ $course->created_at->format('M j, Y') }}</td>
                             <td class="text-end">
                               <div class="btn-group btn-group-sm">
-                                <a href="{{ route("admin.teachers.view", $teacher->id) }}"
+                                <a href="{{ route('admin.courses.view', $course->id) }}"
                                   type="button"
                                   class="btn btn-outline-secondary" >
                                   <i class="bi bi-eye" aria-hidden="true"> </i>
                               </a>
-                                <a href="{{ route('admin.teachers.edit', $teacher->id) }}"
+                                <a href="{{ route('admin.courses.edit', $course->id) }}"
                                   type="button"
                                   class="btn btn-outline-secondary">
                                   <i class="bi bi-pencil" aria-hidden="true"> </i>
                                 </a>
-                                <a href="{{ route('admin.teachers.destroy', $teacher->id) }}" class="btn btn-outline-danger">
+                                <a href="{{ route('admin.courses.destroy', $course->id) }}" class="btn btn-outline-danger">
                                   <i class="bi bi-trash" aria-hidden="true"> </i>
                                 </a>
 

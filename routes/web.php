@@ -2,6 +2,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\CourseController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,4 +30,14 @@ Route::prefix('teachers')->group(function () {
     Route::put('/{id}', [TeacherController::class, 'update'])->name('admin.teachers.update');
     Route::get('/{id}', [TeacherController::class, 'destroy'])->name('admin.teachers.destroy');
     Route::get('/{id}/view', [TeacherController::class, 'show'])->name('admin.teachers.view');
+});
+
+Route::prefix('courses')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('admin.courses.index');
+    Route::get('/create', [CourseController::class, 'create'])->name('admin.courses.create');
+    Route::post('/store', [CourseController::class, 'store'])->name('admin.courses.store');
+    Route::get('/{id}/edit', [CourseController::class, 'edit'])->name('admin.courses.edit');
+    Route::put('/{id}', [CourseController::class, 'update'])->name('admin.courses.update');
+    Route::get('/{id}', [CourseController::class, 'destroy'])->name('admin.courses.destroy');
+    Route::get('/{id}/view', [CourseController::class, 'show'])->name('admin.courses.view');
 });
