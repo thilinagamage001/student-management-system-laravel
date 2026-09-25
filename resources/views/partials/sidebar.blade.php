@@ -149,6 +149,30 @@
 
                 </ul>
               </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-tree-fill"></i>
+                  <p>
+                    Enrollments
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin.teacher-courses.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Enrollment List</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.enrollments.create') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Create Enrollment</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>              
             </ul>
             <!--end::Sidebar Menu-->
           </nav>
