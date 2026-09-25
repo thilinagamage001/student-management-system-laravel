@@ -53,12 +53,12 @@ class StudentController extends Controller
 
             ]);
 
-             DB::transaction(function () use ($request) {
+             DB::transaction(function () use ($validated, $request) {
                     $user = User::create([
-                            'first_name' => $request->first_name,
-                            'last_name' => $request->last_name,
-                            'email' => $request->email,
-                            'password' => Hash::make($request->password),
+                            'first_name' => $validated['first_name'],
+                            'last_name' => $validated['last_name'],
+                            'email' => $validated['email'],
+                            'password' => Hash::make($validated['password']),
                             'role' => 'student',
                         ]);
                         
@@ -75,12 +75,12 @@ class StudentController extends Controller
                         $student = Student::create([
                             'user_id' => $user->id,
                             'reg_no' => $studentId,
-                            'phone' => $request->phone,
-                            'dob' => $request->dob,
-                            'age' => $request->age,
-                            'address' => $request->address,
-                            'gender' => $request->gender,
-                            'nic' => $request->nic,
+                            'phone' => $validated['phone'],
+                            'dob' => $validated['dob'],
+                            'age' => $validated['age'],
+                            'address' => $validated['address'],
+                            'gender' => $validated['gender'],
+                            'nic' => $validated['nic'],
                             'profile_picture' => $profile_picture,
                             'status' => 'active',
                         ]);

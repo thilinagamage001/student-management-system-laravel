@@ -95,6 +95,30 @@
 
                 </ul>
               </li>
+                            <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-tree-fill"></i>
+                  <p>
+                    Courses
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route("admin.courses.index") }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Courses List</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.courses.create') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Add Course</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
             </ul>
             <!--end::Sidebar Menu-->
           </nav>
