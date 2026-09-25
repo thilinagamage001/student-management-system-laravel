@@ -44,7 +44,7 @@
                           </select>
                           <a href="{{ route('admin.students.create') }}" class="btn btn-sm btn-primary">
                             <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
-                            New user
+                            New Student
                           </a>
                         </div>
                       </div>
