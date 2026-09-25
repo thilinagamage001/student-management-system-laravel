@@ -21,8 +21,10 @@ class EnrollmentController extends Controller
     public function create()
     {
         $courses = Course::all();
-        $student = Student::with('user')->get();
-        return view('admin.enrollments.create');
+        $students = Student::with('user')->get();
+        $enrollments = Enrollment::pluck('id');
+
+        return view('admin.enrollments.create',compact('courses','students','enrollments'));
     }
 
     /**
