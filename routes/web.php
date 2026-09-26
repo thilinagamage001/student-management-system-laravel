@@ -57,4 +57,5 @@ Route::prefix('teacher-courses')->group(function () {
 Route::prefix('enrollments')->group(function () {
     // Route::get('/', [TeacherCourseController::class, 'index'])->name('admin.enrollments.index');
     Route::get('/create', [EnrollmentController::class, 'create'])->name('admin.enrollments.create');
+    Route::post('/store', [EnrollmentController::class, 'store'])->name('admin.enrollments.store');
 });
