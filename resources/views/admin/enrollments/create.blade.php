@@ -20,48 +20,32 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="select-default">Select Student</label>
                                         
-                                    <select name="student_id" id="student_id" class="form-select" required>
-                                        <option value="">Select Student</option>
+                                        <select name="student_id" class="form-select" required>
+                                            <option value="">Select Student</option>
 
-                                        @foreach($students as $student)
-                                            <option value="{{ $student->id }}">
-                                                {{ $student->reg_no }} -
-                                                {{ $student->user->first_name }}
-                                                {{ $student->user->last_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                            @foreach($students as $student)
+                                                <option value="{{ $student->id }}">
+                                                    {{ $student->reg_no }} -
+                                                    {{ $student->user->first_name }}
+                                                    {{ $student->user->last_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="select-default">Select Course</label>
                                         
-                                        <select class="form-select" name="course_id" required multiple>
-                                            <option value="">Choose...</option>
-
-                                            @foreach($courses as $course)
-                                                <option value="{{ $course->id }}">
-                                                    {{ $course->course_code }} - 
-                                                    {{ $course->name }}
-                                            
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <select name="course_id[]" class="form-select" multiple required>
+                                        @foreach($courses as $course)
+                                            <option value="{{ $course->id }}">
+                                                {{ $course->course_code }} - {{ $course->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
       
                                     </div>
-                                     <div class="mb-3">
-                                        <label class="form-label" for="select-default">Academic Year</label>
-                                        <input type="number" class="form-control" id="validationCustom04" name="academic_year"
-                                            required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="select-default">Semester</label>
-                                        <select class="form-select" id="validationCustom05" name="semester" required>
-                                            <option selected disabled value="">Choose...</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="card-footer">

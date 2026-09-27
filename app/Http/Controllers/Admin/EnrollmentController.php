@@ -7,7 +7,7 @@ use App\Models\Course;
 use App\Models\Student;
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class EnrollmentController extends Controller
 {
     /**
@@ -15,7 +15,14 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        //
+        $enrollments = Enrollment::with([
+            'student.user',
+            'course'
+        ])
+        ->get()
+        ->groupBy('student_id');
+
+        return view('admin.enrollments.index', compact('enrollments'));
     }
 
     /**
@@ -34,27 +41,22 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $validated = $request->validate([
-                'student_id' => ['required', 'integer', 'exists:students,id'],
-                'course_id' => ['required', 'integer', 'exists:courses,id'],
-                'academic_year' => ['required', 'digits:4'],
-                'semester' => ['required', 'integer', 'in:1,2'],
-            ]);
+        $validated = $request->validate([
+            'student_id' => ['required', 'integer', 'exists:students,id'],
+            'course_id' => ['required', 'array', 'min:1'],
+            'course_id.*' => ['integer', 'exists:courses,id'],
+        ]);
 
+        foreach ($validated['course_id'] as $courseId) {
             Enrollment::create([
                 'student_id' => $validated['student_id'],
-                'course_id' => $validated['course_id'],
-                'academic_year' => $validated['academic_year'],
-                'semester' => $validated['semester'],
+                'course_id' => $courseId,
             ]);
-
-        }
-        catch (\Exception $e) {
-            return $e;
         }
 
-        return redirect()->route('admin.enrollments.create')->with('success', 'Course created successfully.');
+        return redirect()
+            ->route('admin.enrollments.index')
+            ->with('success', 'Enrollment created successfully.');
     }
 
     /**
@@ -70,7 +72,19 @@ class EnrollmentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $enrollment = Enrollment::with(['student.user', 'course'])->findOrFail($id);
+
+        $courses = Course::all();
+
+        $selectedCourseIds = Enrollment::where('student_id', $enrollment->student_id)
+            ->pluck('course_id')
+            ->toArray();
+
+        return view('admin.enrollments.edit', compact(
+            'enrollment',
+            'courses',
+            'selectedCourseIds'
+        ));
     }
 
     /**
@@ -78,7 +92,37 @@ class EnrollmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+   $enrollment = Enrollment::findOrFail($id);
+
+    $validated = $request->validate([
+        'course_id' => ['required', 'array', 'min:1'],
+        'course_id.*' => ['integer', 'exists:courses,id'],
+   
+    ]);
+
+    DB::transaction(function () use ($enrollment, $validated) {
+
+        // Student cannot be changed.
+        $studentId = $enrollment->student_id;
+
+        // Remove the student's existing courses for this
+        // academic year and semester.
+        Enrollment::where('student_id', $studentId)
+            ->delete();
+
+        // Create the currently selected courses.
+        foreach ($validated['course_id'] as $courseId) {
+            Enrollment::create([
+                'student_id' => $studentId,
+                'course_id' => $courseId,
+                
+            ]);
+        }
+    });
+
+    return redirect()
+        ->route('admin.enrollments.index')
+        ->with('success', 'Enrollment updated successfully.');
     }
 
     /**
@@ -86,6 +130,12 @@ class EnrollmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $enrollment = Enrollment::findOrFail($id);
+
+        $enrollment->delete();
+
+        return redirect()
+            ->route('admin.enrollments.index')
+            ->with('success', 'Enrollment deleted successfully.');
     }
 }
