@@ -4,11 +4,12 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\TeacherCourseController;
+use App\Http\Controllers\Admin\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/profile', [DashboardController::class, 'profile'])->name('admin.profile');
 
 
@@ -52,3 +53,15 @@ Route::prefix('teacher-courses')->group(function () {
     Route::get('/{id}', [TeacherCourseController::class, 'destroy'])->name('admin.teacher-courses.destroy');
     Route::get('/{id}/view', [TeacherCourseController::class, 'show'])->name('admin.teacher-courses.view');
 });
+
+Route::prefix('enrollments')->group(function () {
+    Route::get('/', [EnrollmentController::class, 'index'])->name('admin.enrollments.index');
+    Route::get('/create', [EnrollmentController::class, 'create'])->name('admin.enrollments.create');
+    Route::post('/store', [EnrollmentController::class, 'store'])->name('admin.enrollments.store');
+    Route::get('/{id}/edit', [EnrollmentController::class, 'edit'])->name('admin.enrollments.edit');
+    Route::put('/{id}', [EnrollmentController::class, 'update'])->name('admin.enrollments.update');
+    Route::get('/{id}', [EnrollmentController::class, 'destroy'])->name('admin.enrollments.destroy');
+    Route::get('/{id}/view', [EnrollmentController::class, 'show'])->name('admin.teacher-courses.view');
+    
+
+    });

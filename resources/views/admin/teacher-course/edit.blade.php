@@ -12,8 +12,9 @@
                         <div class="card-header">
                             <div class="card-title">Edit Assign</div>
                         </div>
-                        <form class="needs-validation" novalidate action="{{ route('admin.teacher-courses.update', $teacherCourse->id) }}"
-                            method="POST" enctype="multipart/form-data">
+                        <form class="needs-validation" novalidate
+                            action="{{ route('admin.teacher-courses.update', $teacherCourse->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -21,32 +22,31 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="select-default">Select Course</label>
 
-<select class="form-select" name="course_id" required>
-    @foreach ($courses as $course)
-        <option value="{{ $course->id }}" selected>
-            {{ $course->course_code }} - {{ $course->name }}
-        </option>
-    @endforeach
-</select>
+                                        <select class="form-select" name="course_id" required>
+                                            @foreach ($courses as $course)
+                                                <option value="{{ $course->id }}" selected>
+                                                    {{ $course->course_code }} - {{ $course->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="select-default">Select Teacher</label>
-<select class="form-select" name="teacher_id" required>
-    <option value="">Choose...</option>
+                                        <select class="form-select" name="teacher_id" required>
+                                            <option value="">Choose...</option>
 
-    @foreach ($teachers as $teacher)
-        <option
-            value="{{ $teacher->id }}"
-            {{ $teacher->id == $teacherCourse->teacher_id ? 'selected disabled' : '' }}>
+                                            @foreach ($teachers as $teacher)
+                                                <option value="{{ $teacher->id }}"
+                                                    {{ $teacher->id == $teacherCourse->teacher_id ? 'selected disabled' : '' }}>
 
-            {{ $teacher->reg_no }}
-            - {{ $teacher->user->first_name }}
-            {{ $teacher->user->last_name }}
+                                                    {{ $teacher->reg_no }}
+                                                    - {{ $teacher->user->first_name }}
+                                                    {{ $teacher->user->last_name }}
 
-        </option>
-    @endforeach
-</select>
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                 </div>
