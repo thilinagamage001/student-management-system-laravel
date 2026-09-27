@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->year('academic_year');
-            $table->unsignedTinyInteger('semester');
             $table->timestamps();
-            $table->unique(['student_id','course_id','academic_year','semester']);
+            $table->unique(['student_id','course_id']);
         });
     }
 
