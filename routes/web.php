@@ -61,7 +61,9 @@ Route::prefix('enrollments')->group(function () {
     Route::get('/{id}/edit', [EnrollmentController::class, 'edit'])->name('admin.enrollments.edit');
     Route::put('/{id}', [EnrollmentController::class, 'update'])->name('admin.enrollments.update');
     Route::get('/{id}', [EnrollmentController::class, 'destroy'])->name('admin.enrollments.destroy');
-    Route::get('/{id}/view', [EnrollmentController::class, 'show'])->name('admin.teacher-courses.view');
+     Route::get('/{id}/view', [EnrollmentController::class, 'show'])->name('admin.teacher-courses.view');
     
 
     });
+
+    

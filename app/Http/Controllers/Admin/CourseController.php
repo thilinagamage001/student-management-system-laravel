@@ -36,7 +36,7 @@ class CourseController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'credits' => 'required|integer|min:1',
-            
+
         ]);
 
         Course::create([
@@ -50,7 +50,7 @@ class CourseController extends Controller
         catch (\Exception $e) {
             return $e;
         }
-        
+
 
         // Redirect to the course index page with a success message
         return redirect()->route('admin.courses.create')->with('success', 'Course created successfully.');
