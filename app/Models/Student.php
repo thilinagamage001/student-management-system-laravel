@@ -18,12 +18,15 @@ class Student extends Model
         'profile_picture',
         'status',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class,);
     }
     public function enrollments(){
         return $this->hasMany(Enrollment::class);
+    }
+    public function attendance(){
+        return $this->hasMany(Attendance::class);
     }
 }
