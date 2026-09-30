@@ -172,7 +172,32 @@
                   </li>
 
                 </ul>
-              </li>              
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-tree-fill"></i>
+                  <p>
+                    Attendance
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin.attendance.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>View Attendance</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.attendance.create') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Mark Attendance</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
             </ul>
             <!--end::Sidebar Menu-->
           </nav>

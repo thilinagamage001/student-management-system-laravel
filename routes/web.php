@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\TeacherCourseController;
 use App\Http\Controllers\Admin\EnrollmentController;
+use App\Http\Controllers\Admin\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -61,7 +62,24 @@ Route::prefix('enrollments')->group(function () {
     Route::get('/{id}/edit', [EnrollmentController::class, 'edit'])->name('admin.enrollments.edit');
     Route::put('/{id}', [EnrollmentController::class, 'update'])->name('admin.enrollments.update');
     Route::get('/{id}', [EnrollmentController::class, 'destroy'])->name('admin.enrollments.destroy');
-    Route::get('/{id}/view', [EnrollmentController::class, 'show'])->name('admin.teacher-courses.view');
-    
+
+
+
+});
+
+
+Route::prefix('attendance')->group(function () {
+    Route::get('/', [AttendanceController::class, 'index'])->name('admin.attendance.index');
+    Route::get('/create', [AttendanceController::class, 'create'])->name('admin.attendance.create');
+    Route::get('/students', [AttendanceController::class, 'getStudents'])->name('admin.attendance.getstudents');
+    Route::post('/store', [AttendanceController::class, 'store'])->name('admin.attendance.store');
+   // Route::get('/{id}/edit', [AttendanceController::class, 'edit'])->name('admin.attendance.edit');
+   Route::get('/edit-session/{course_id}/{date}',[AttendanceController::class, 'editSession'])->name('admin.attendance.editSession');
+    //Route::put('/{id}', [AttendanceController::class, 'update'])->name('admin.attendance.update');
+    Route::put('/update-session',[AttendanceController::class, 'updateSession'])->name('admin.attendance.updateSession');
+    Route::get('/{id}', [AttendanceController::class, 'destroy'])->name('admin.attendance.destroy');
+    Route::get('/{id}/view', [AttendanceController::class, 'show'])->name('admin.attendance.view');
+
 
     });
+

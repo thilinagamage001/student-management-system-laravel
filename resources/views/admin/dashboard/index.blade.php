@@ -6,7 +6,7 @@
 @section('content')
 
 
-    
+
         <!--begin::App Content-->
         <div class="app-content">
           <!--begin::Container-->
@@ -50,7 +50,7 @@
                     <h3>53<sup class="fs-5">%</sup></h3>
 
                     <p>Bounce Rate</p>
-                  </div>
+                  </div> 
                   <svg
                     class="small-box-icon"
                     fill="currentColor"
@@ -146,5 +146,5 @@
           <!--end::Container-->
         </div>
         <!--end::App Content-->
- 
+
 @endsection
