@@ -14,6 +14,7 @@
     </div>
     <!--end::App Wrapper-->
     @include('partials.script')
+    @stack('scripts')
   </body>
   <!--end::Body-->
 </html>
