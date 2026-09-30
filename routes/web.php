@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\TeacherCourseController;
 use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\ExamController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,3 +84,14 @@ Route::prefix('attendance')->group(function () {
 
     });
 
+    Route::prefix('exams')->group(function () {
+    Route::get('/', [ExamController::class, 'index'])->name('admin.exams.index');
+    Route::get('/create', [ExamController::class, 'create'])->name('admin.exams.create');
+    Route::post('/store', [ExamController::class, 'store'])->name('admin.exams.store');
+    Route::get('/{exam}/edit', [ExamController::class, 'edit'])->name('admin.exams.edit');
+    Route::put('/{exam}', [ExamController::class, 'update'])->name('admin.exams.update');
+    Route::get('/{exam}', [ExamController::class, 'destroy'])->name('admin.exams.destroy');
+    Route::get('/{exam}/view', [ExamController::class, 'show'])->name('admin.exams.view');
+
+
+    });
