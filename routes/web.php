@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TeacherCourseController;
 use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\GradeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -95,3 +96,15 @@ Route::prefix('attendance')->group(function () {
 
 
     });
+
+    Route::prefix('grades')->group(function () {
+    Route::get('/',[GradeController::class, 'index'])->name('admin.grades.index');
+    Route::get('/create', [GradeController::class, 'create'])->name('admin.grades.create');
+    Route::post('/store', [GradeController::class, 'store'])->name('admin.grades.store');
+    Route::get('/grades/students',[GradeController::class, 'getStudents'])->name('admin.grades.students');
+    Route::post('/grades/store',[GradeController::class, 'store'])->name('admin.grades.store');
+    Route::get('/{grade}/edit',[GradeController::class, 'edit'])->name('admin.grades.edit');
+    Route::put('/{grade}',[GradeController::class, 'update'])->name('admin.grades.update');
+    Route::get('/{grade}',[GradeController::class, 'destroy'])->name('admin.grades.destroy');
+    });
+

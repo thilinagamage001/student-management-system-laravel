@@ -1,4 +1,3 @@
-```blade
 @extends('layouts.app')
 @push('title')
     Create Exam
