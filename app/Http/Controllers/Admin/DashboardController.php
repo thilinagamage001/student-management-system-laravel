@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
+use App\Models\Course;
+use App\Models\Enrollment;
+use App\Models\Exam;
+use App\Models\Grade;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -10,9 +17,59 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function dashboard()
+    public function index()
     {
-        return view('admin.dashboard.index');
+        $totalStudents = Student::count();
+
+        $totalTeachers = Teacher::count();
+
+        $totalCourses = Course::count();
+
+        $totalEnrollments = Enrollment::count();
+
+        $todayAttendance = Attendance::whereDate(
+            'attendance_date',
+            today()
+        )->count();
+
+        $totalExams = Exam::count();
+
+        $totalGrades = Grade::count();
+
+        $attendancePercentage =
+            Attendance::count() > 0
+            ? round(
+                (Attendance::where('status', 'present')->count()
+                / Attendance::count()) * 100,
+                2
+            )
+            : 0;
+        $recentStudents = Student::with('user')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $upcomingExams = Exam::with('course')
+            ->whereDate('exam_date', '>=', today())
+            ->orderBy('exam_date')
+            ->take(5)
+            ->get();
+
+        return view(
+            'admin.dashboard.index',
+            compact(
+                'recentStudents',
+                'upcomingExams',
+                'totalStudents',
+                'totalTeachers',
+                'totalCourses',
+                'totalEnrollments',
+                'todayAttendance',
+                'totalExams',
+                'totalGrades',
+                'attendancePercentage'
+            )
+        );
     }
 
     /**
