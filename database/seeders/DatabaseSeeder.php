@@ -23,14 +23,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-        TeacherSeeder::class,
-        ]);
-            $this->call([
-        StudentSeeder::class,
+            TeacherSeeder::class,
         ]);
         $this->call([
-        CourseSeeder::class,
+            StudentSeeder::class,
+        ]);
+        $this->call([
+            CourseSeeder::class,
+        ]);
+        $this->call([
+            QuizQuestionSeeder::class,
         ]);
     }
-
 }

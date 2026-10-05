@@ -7,7 +7,7 @@
 
         <div class="card">
 
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header d-flex justify-content-between ">
 
                 <h4>Grade List</h4>
 
@@ -221,4 +221,3 @@
 
     </div>
 @endsection
-```
