@@ -8,11 +8,12 @@ use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\GradeController;
+use App\Http\Controllers\Admin\QuizQuestionController;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/profile', [DashboardController::class, 'profile'])->name('admin.profile');
 
 
@@ -107,4 +108,16 @@ Route::prefix('attendance')->group(function () {
     Route::put('/{grade}',[GradeController::class, 'update'])->name('admin.grades.update');
     Route::get('/{grade}',[GradeController::class, 'destroy'])->name('admin.grades.destroy');
     });
+
+
+    Route::prefix('quiz-bank')->group(function (){
+    Route::get('/', [QuizQuestionController::class, 'index'])->name('admin.quiz-bank.index');
+    Route::get('/create', [QuizQuestionController::class, 'create'])->name('admin.quiz-bank.create');
+    Route::post('/store', [QuizQuestionController::class, 'store'])->name('admin.quiz-bank.store');
+    Route::get('/{question}/edit', [QuizQuestionController::class, 'edit'])->name('admin.quiz-bank.edit');
+    Route::put('/{question}', [QuizQuestionController::class, 'update'])->name('admin.quiz-bank.update');
+    Route::delete('/{quizBank}',[QuizQuestionController::class, 'destroy'])->name('admin.quiz-bank.destroy');
+
+     });
+
 

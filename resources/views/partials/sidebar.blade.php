@@ -218,10 +218,22 @@
                       <p>Create Exams</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.quiz-bank.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Quiz</p>
+                    </a>
+                  </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.quiz-bank.create') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Create Quiz</p>
+                    </a>
+                </li>
 
                 </ul>
               </li>
-                             <li class="nav-item">
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-tree-fill"></i>
                   <p>
@@ -245,6 +257,7 @@
 
                 </ul>
               </li>
+
 
             </ul>
             <!--end::Sidebar Menu-->
